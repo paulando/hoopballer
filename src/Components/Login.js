@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import { Redirect } from 'react-router-dom';
 import LoginView from '../Containers/LoginView';
 
 class Login extends Component {
@@ -9,10 +10,10 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            password_response: {}
+            auth_error: "",
+            snackbar: false,
+            redirect: false
         }
-
-        console.log(this.state);
 
     }
 
@@ -49,25 +50,47 @@ class Login extends Component {
             .then(res => {
 
                 console.log(res);
+                              
+                this.setState({
+                    redirect: true
+                });
+
 
             })
             .catch(error => {
 
                 console.log(error);
-                this.setState({password_response: error})
+                this.setState({
+                    auth_error: error.message,
+                    snackbar: true
+                })
 
             });
 
+    }
+
+    handleSnackbarClose() {
+
+        this.setState({
+            snackbar: false
+        });
 
     }
 
     render() {
-        console.log(this.state.password_response);
+        console.log(this.state);
+
+        if (this.state.redirect) {
+            return <Redirect to="/dashboard" />
+        }
 
         return (
             <LoginView
                 handleLogin={ () => this.handleLogin() }
                 handleRegistration={ () => this.handleRegistration() }
+                authError={this.state.auth_error}
+                snackbar={this.state.snackbar}
+                handleSnackbarClose={ () => this.handleSnackbarClose() }
             />
         );
 

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import Home from "./Components/Home";
 import Login from "./Components/Login";
-import DashboardView from "./Containers/DashboardView";
+import Dashboard from "./Components/Dashboard";
 import Error404 from "./Containers/Error404";
 
 class App extends Component {
@@ -12,16 +13,10 @@ class App extends Component {
       <Router>
           <div>
               <Switch>
-                  <Route exact path="/" component={Login}/>
+                  <Route exact path="/" component={Home}/>
                   <Route exact path="/login" component={Login}/>
-                  <Route exact path="/dashboard" component={DashboardView}/>
+                  <Route exact path="/dashboard" component={Dashboard}/>
                   <Route component={Error404}/>
-                  {/*<Route path="/about" component={About}/>
-                  <Route path="/portfolio" component={Portfolio}/>
-                  <Route exact path="/blog" component={Blog}/>
-                  <Route path="/blog/:id" component={BlogItem}/>
-                  <Route path="/contact" component={Contact}/>
-                  */}
               </Switch>
           </div>
       </Router>
